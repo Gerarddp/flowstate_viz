@@ -57,8 +57,9 @@ def find_edges(states, relname):
     try:
         deps = find(states, relname)
         for dep in deps:
-            for dep_type, dep_name in dep.items():
-                yield make_node_name(dep_type, dep_name)
+            if isinstance(dep, dict):
+                for dep_type, dep_name in dep.items():
+                    yield make_node_name(dep_type, dep_name)
     except AttributeError as e:
         sys.stderr.write("Bad state: {0}\n".format(str(states)))
         raise e
